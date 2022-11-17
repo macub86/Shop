@@ -2,6 +2,7 @@ package com.example.shop
 
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +33,7 @@ import java.text.FieldPosition
 
 
 class MainActivity : AppCompatActivity() {
-
+    private val TAG=MainActivity::class.java.simpleName
     private val RC_NICKNAME=210
     private val RC_SIGNUP:Int=200
     var signup=false
@@ -78,9 +79,19 @@ class MainActivity : AppCompatActivity() {
         }
         override fun onBindViewHolder(holder: FunctionHolder, position: Int) {
             holder.nameText.text=functions.get(position)
+            holder.itemView.setOnClickListener{
+                functionClicked(holder,position)
+            }
         }
         override fun getItemCount(): Int {
             return functions.size
+        }
+    }
+
+    private fun functionClicked(holder: FunctionHolder, position: Int) {
+        Log.d(TAG,"functionClicked: $position")
+        when(position){
+            1-> startActivity(Intent(this, ContactActivity::class.java))
         }
     }
 
